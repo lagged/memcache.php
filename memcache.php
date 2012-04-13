@@ -260,15 +260,17 @@ EOB;
 
 		</div>
 		<div class="graph div3"><h2>Host Status Diagrams</h2>
-		<table cellspacing=0><tbody>
+		<table cellspacing=0><thead>
 EOB;
 
 	$size='width='.(GRAPH_SIZE+50).' height='.(GRAPH_SIZE+10);
 	echo <<<EOB
 		<tr>
-		<td class=td-0>Cache Usage</td>
-		<td class=td-1>Hits &amp; Misses</td>
+		<th class=td-0>Cache Usage</th>
+		<th class=td-1>Hits &amp; Misses</th>
 		</tr>
+        </thead>
+        <tbody>
 EOB;
 
 	echo
@@ -289,8 +291,9 @@ EOB;
 	</tbody></table>
 <br/>
 	<div class="info"><h2>Cache Information</h2>
-		<table cellspacing=0><tbody>
-		<tr class=tr-0><td class=td-0>Current Items(total)</td><td>$curr_items ($total_items)</td></tr>
+		<table cellspacing=0><thead>
+		<tr class=tr-0><th class=td-0>Current Items(total)</th><th>$curr_items ($total_items)</th></tr>
+        </thead><tbody>
 		<tr class=tr-1><td class=td-0>Hits</td><td class=td-1>{$hits}</td></tr>
 		<tr class=tr-0><td class=td-0>Misses</td><td>{$misses}</td></tr>
 		<tr class=tr-1><td class=td-0>Request Rate (hits, misses)</td><td>$req_rate cache requests/second</td></tr>
@@ -317,9 +320,11 @@ EOB;
 
     	echo <<< EOB
 
-			<div class="info"><table cellspacing=0><tbody>
+			<div class="info"><table cellspacing=0><thead>
 			<tr><th colspan="2">$server</th></tr>
 			<tr><th>Slab Id</th><th>Info</th></tr>
+            </thead>
+            <tbody>
 EOB;
 
 			foreach($entries as $slabId => $slab) {
