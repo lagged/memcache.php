@@ -200,8 +200,8 @@ switch ($_GET['op']) {
 	    $set_rate = sprintf("%.2f",($sets)/($time-$startTime));
 
 	    echo <<< EOB
-		<div class="info div1"><h2>General Cache Information</h2>
-		<table cellspacing=0><tbody>
+		<h2>General Cache Information</h2>
+		<table class="table table-striped"><tbody>
 		<tr class=tr-1><td class=td-0>PHP Version</td><td>$phpversion</td></tr>
 EOB;
 		echo "<tr class=tr-0><td class=td-0>Memcached Host". ((count($GLOBALS['MEMCACHE_SERVERS'])>1) ? 's':'')."</td><td>";
@@ -223,12 +223,11 @@ EOB;
 
 	echo <<<EOB
 		</tbody></table>
-		</div>
 
-		<div class="info div1"><h2>Memcache Server Information</h2>
+		<h2>Memcache Server Information</h2>
 EOB;
         foreach($GLOBALS['MEMCACHE_SERVERS'] as $server){
-            echo '<table cellspacing=0><tbody>';
+            echo '<table class="table table-striped"><tbody>';
             echo '<tr class=tr-0><td class=td-0>'.$server.'</td><td>
                   <button onclick="javascript:must_confirm(\'Delete all content on the server?!\',\''.$PHP_SELF.'&server='.array_search($server,$GLOBALS['MEMCACHE_SERVERS']).'&op=6\');">[<b>Flush server</b>]</button>
                   </td></tr>';
@@ -258,9 +257,8 @@ EOB;
 	   }
     echo <<<EOB
 
-		</div>
-		<div class="graph div3"><h2>Host Status Diagrams</h2>
-		<table cellspacing=0><thead>
+		<h2>Host Status Diagrams</h2>
+		<table class="table table-striped"><thead>
 EOB;
 
 	$size='width='.(GRAPH_SIZE+50).' height='.(GRAPH_SIZE+10);
@@ -290,8 +288,8 @@ EOB;
 	</tr>
 	</tbody></table>
 <br/>
-	<div class="info"><h2>Cache Information</h2>
-		<table cellspacing=0><thead>
+	<h2>Cache Information</h2>
+		<table class="table table-striped"><thead>
 		<tr class=tr-0><th class=td-0>Current Items(total)</th><th>$curr_items ($total_items)</th></tr>
         </thead><tbody>
 		<tr class=tr-1><td class=td-0>Hits</td><td class=td-1>{$hits}</td></tr>
@@ -301,7 +299,6 @@ EOB;
 		<tr class=tr-1><td class=td-0>Miss Rate</td><td>$miss_rate cache requests/second</td></tr>
 		<tr class=tr-0><td class=td-0>Set Rate</td><td>$set_rate cache requests/second</td></tr>
 		</tbody></table>
-		</div>
 
 EOB;
 
@@ -320,7 +317,7 @@ EOB;
 
     	echo <<< EOB
 
-			<div class="info"><table cellspacing=0><thead>
+			<table class="table table-striped"><thead>
 			<tr><th colspan="2">$server</th></tr>
 			<tr><th>Slab Id</th><th>Info</th></tr>
             </thead>
@@ -356,7 +353,7 @@ EOB;
 			}
 		echo <<<EOB
 			</tbody></table>
-			</div><hr/>
+			<hr/>
 EOB;
 }
 		break;
@@ -377,8 +374,9 @@ EOB;
         list($h,$p) = explode(':',$theserver);
         $r = sendMemcacheCommand($h,$p,'get '.$theKey);
         echo <<<EOB
-        <div class="info"><table cellspacing=0><tbody>
+        <table class="table table-striped"><thead>
 			<tr><th>Server<th>Key</th><th>Value</th><th>Delete</th></tr>
+            </thead><tbody>
 EOB;
         echo "<tr><td class=td-0>",$theserver,"</td><td class=td-0>",$theKey,
              " <br/>flag:",$r['VALUE'][$theKey]['stat']['flag'],
@@ -387,7 +385,7 @@ EOB;
              '<td><a href="',$PHP_SELF,'&op=5&server=',(int)$_GET['server'],'&key=',base64_encode($theKey),"\">Delete</a></td>","</tr>";
         echo <<<EOB
 			</tbody></table>
-			</div><hr/>
+			<hr/>
 EOB;
     break;
     case 5: // item delete
