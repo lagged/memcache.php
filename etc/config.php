@@ -13,6 +13,7 @@ define('MEMCACHE_SCRIPT', $_SERVER['PHP_SELF']);
 define('BASE_URL', '/');
 define('JQ_TABLESORT', BASE_URL . 'js/jquery.tablesorter.min.js');
 define('JQ_CORE', BASE_URL . 'js/jquery.min.js');
+define('RUN_WRAPPED', false);
 
 $MEMCACHE_SERVERS[] = 'localhost:11211'; // add more as an array
 //$MEMCACHE_SERVERS[] = 'mymemcache-server2:11211'; // add more as an array
