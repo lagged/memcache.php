@@ -1,6 +1,12 @@
-## memcache.php
+# memcache.php
 
 An APC-like stats/info page for your memcached servers.
+
+## Setup
+
+ * git clone this
+ * make changes to `etc/config.local.php` (copy from `etc/config.php`)
+ * Profit!
 
 ## Credit
 
