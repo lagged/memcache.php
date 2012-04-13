@@ -3,7 +3,7 @@
   +----------------------------------------------------------------------+
   | PHP Version 5                                                        |
   +----------------------------------------------------------------------+
-  | Copyright (c) 1997-2004 The PHP Group                                |
+  | Copyright (c) 1997-2012 The PHP Group                                |
   +----------------------------------------------------------------------+
   | This source file is subject to version 3.0 of the PHP license,       |
   | that is bundled with this package in the file LICENSE, and is        |
@@ -15,6 +15,7 @@
   +----------------------------------------------------------------------+
   | Initial author:   Harun Yayli <harunyayli at gmail.com>              |
   | Modifications by: Artur Ejsmont http://artur.ejsmont.org             |
+  |                   Till Klampaeckel <till@php.net>                    |
   +----------------------------------------------------------------------+
 */
 
