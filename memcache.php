@@ -170,7 +170,9 @@ if (isset($_GET['IMG'])){
 	exit;
 }
 
-echo getHeader();
+if (RUN_WRAPPED !== true) {
+    echo getHeader();
+}
 echo getMenu();
 
 switch ($_GET['op']) {
@@ -490,6 +492,6 @@ EOB;
 
 
 }
-echo getFooter();
-
-?>
+if (RUN_WRAPPED !== true) {
+    echo getFooter();
+}
