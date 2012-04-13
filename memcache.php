@@ -50,6 +50,20 @@ EOB;
 
 ///////////MEMCACHE FUNCTIONS /////////////////////////////////////////////////////////////////////
 
+/**
+ * Return the URL to this script so we can
+ * adjust it via configuration.
+ *
+ * @return string
+ */
+function getUrl() {
+    $url = MEMCACHE_SCRIPT;
+    if (substr($url, -1) != '?') {
+        $url .= '?';
+    }
+    return $url;
+}
+
 function sendMemcacheCommands($command){
     global $MEMCACHE_SERVERS;
 	$result = array();
@@ -307,7 +321,7 @@ function bsize($s) {
 
 // create menu entry
 function menu_entry($ob,$title) {
-	global $PHP_SELF;
+	$PHP_SELF = getUrl();
 	if ($ob==$_GET['op']){
 	    return "<li><a class=\"child_active\" href=\"$PHP_SELF&op=$ob\">$title</a></li>";
 	}
@@ -550,7 +564,7 @@ function getFooter(){
 
 }
 function getMenu(){
-    global $PHP_SELF;
+    $PHP_SELF = getUrl();
 echo "<ol class=menu>";
 if ($_GET['op']!=4){
 echo <<<EOB
@@ -575,10 +589,9 @@ EOB;
 
 // TODO, AUTH
 
-$_GET['op'] = !isset($_GET['op'])? '1':$_GET['op'];
-$PHP_SELF= isset($_SERVER['PHP_SELF']) ? htmlentities(strip_tags($_SERVER['PHP_SELF'],'')) : '';
+$PHP_SELF = getUrl();
 
-$PHP_SELF=$PHP_SELF.'?';
+$_GET['op'] = !isset($_GET['op'])? '1':$_GET['op'];
 $time = time();
 // sanitize _GET
 
