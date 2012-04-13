@@ -57,8 +57,8 @@ function getHeader(){
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>js/style.css" type="text/css" />
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>js/vtip/css/vtip.css" type="text/css" />
 
-<script type="text/javascript" src="<?php echo BASE_URL; ?>js/jquery.min.js"></script>
-<script type="text/javascript" src="<?php echo BASE_URL; ?>js/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="<?php echo JQ_CORE; ?>"></script>
+<script type="text/javascript" src="<?php echo JQ_TABLESORT; ?>"></script>
 <script type="text/javascript" src="<?php echo BASE_URL; ?>js/vtip/vtip-min.js"></script>
 
 <script type="text/javascript">
