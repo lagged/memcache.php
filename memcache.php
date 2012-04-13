@@ -46,10 +46,8 @@ function sendMemcacheCommands($command){
 	$result = array();
 
 	foreach($MEMCACHE_SERVERS as $server){
-		$strs = explode(':',$server);
-		$host = $strs[0];
-		$port = $strs[1];
-		$result[$server] = sendMemcacheCommand($host,$port,$command);
+		list($host, $port) = explode(':', $server);
+		$result[$server]   = sendMemcacheCommand($host,$port,$command);
 	}
 	return $result;
 }
@@ -109,7 +107,7 @@ function parseMemcacheResults($str){
 }
 
 function dumpCacheSlab($server,$slabId,$limit){
-    list($host,$port) = explode(':',$server);
+    list($host,$port) = explode(':', $server);
     $resp = sendMemcacheCommand($host,$port,'stats cachedump '.$slabId.' '.$limit);
     return $resp;
 }
