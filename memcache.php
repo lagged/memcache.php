@@ -51,6 +51,7 @@ EOB;
 
 // so oldschool :-)
 require_once __DIR__ . '/src/functions.php';
+require_once __DIR__ . '/src/display.functions.php';
 
 //
 // don't cache this page
