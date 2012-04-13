@@ -97,8 +97,8 @@ foreach($_GET as $key=>$g){
 
 // singleout
 // when singleout is set, it only gives details for that server.
-if (isset($_GET['singleout']) && $_GET['singleout']>=0 && $_GET['singleout'] <count($MEMCACHE_SERVERS)){
-    $MEMCACHE_SERVERS = array($MEMCACHE_SERVERS[$_GET['singleout']]);
+if (isset($_GET['singleout']) && $_GET['singleout']>=0 && $_GET['singleout'] <count($GLOBALS['MEMCACHE_SERVERS'])){
+    $GLOBALS['MEMCACHE_SERVERS'] = array($GLOBALS['MEMCACHE_SERVERS'][$_GET['singleout']]);
 }
 
 // display images
@@ -204,16 +204,16 @@ switch ($_GET['op']) {
 		<table cellspacing=0><tbody>
 		<tr class=tr-1><td class=td-0>PHP Version</td><td>$phpversion</td></tr>
 EOB;
-		echo "<tr class=tr-0><td class=td-0>Memcached Host". ((count($MEMCACHE_SERVERS)>1) ? 's':'')."</td><td>";
+		echo "<tr class=tr-0><td class=td-0>Memcached Host". ((count($GLOBALS['MEMCACHE_SERVERS'])>1) ? 's':'')."</td><td>";
 
 		$i=0;
-		if (!isset($_GET['singleout']) && count($MEMCACHE_SERVERS)>1){
-    		foreach($MEMCACHE_SERVERS as $server){
+		if (!isset($_GET['singleout']) && count($GLOBALS['MEMCACHE_SERVERS'])>1){
+    		foreach($GLOBALS['MEMCACHE_SERVERS'] as $server){
     		      echo ($i+1).'. <a href="'.$PHP_SELF.'&singleout='.$i++.'">'.$server.'</a><br/>';
     		}
 		}
 		else{
-		    echo '1.'.$MEMCACHE_SERVERS[0];
+		    echo '1.'.$GLOBALS['MEMCACHE_SERVERS'][0];
 		}
 		if (isset($_GET['singleout'])){
 		      echo '<a href="'.$PHP_SELF.'">(all servers)</a><br/>';
@@ -227,10 +227,10 @@ EOB;
 
 		<div class="info div1"><h2>Memcache Server Information</h2>
 EOB;
-        foreach($MEMCACHE_SERVERS as $server){
+        foreach($GLOBALS['MEMCACHE_SERVERS'] as $server){
             echo '<table cellspacing=0><tbody>';
             echo '<tr class=tr-0><td class=td-0>'.$server.'</td><td>
-                  <button onclick="javascript:must_confirm(\'Delete all content on the server?!\',\''.$PHP_SELF.'&server='.array_search($server,$MEMCACHE_SERVERS).'&op=6\');">[<b>Flush server</b>]</button>
+                  <button onclick="javascript:must_confirm(\'Delete all content on the server?!\',\''.$PHP_SELF.'&server='.array_search($server,$GLOBALS['MEMCACHE_SERVERS']).'&op=6\');">[<b>Flush server</b>]</button>
                   </td></tr>';
             echo "<tr class=tr-1><td class=td-0>Memcache Version</td><td>".($memcacheVersion[$server])."</td></tr>";
             
@@ -251,7 +251,7 @@ EOB;
     		echo '<tr class=tr-1><td class=td-0>Threads</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['threads']),'</td></tr>';
     		
             echo '<tr class=tr-0><td class=td-0>'.$server.'</td><td>
-                  <button onclick="javascript:must_confirm(\'Clear stats on the server?!\',\''.$PHP_SELF.'&server='.array_search($server,$MEMCACHE_SERVERS).'&op=7\');">[<b>Reset stats</b>]</button>
+                  <button onclick="javascript:must_confirm(\'Clear stats on the server?!\',\''.$PHP_SELF.'&server='.array_search($server,$GLOBALS['MEMCACHE_SERVERS']).'&op=7\');">[<b>Reset stats</b>]</button>
                   </td></tr>';
             
     		echo '</tbody></table>';
@@ -323,7 +323,7 @@ EOB;
 EOB;
 
 			foreach($entries as $slabId => $slab) {
-			    $dumpUrl = $PHP_SELF.'&op=2&server='.(array_search($server,$MEMCACHE_SERVERS)).'&dumpslab='.$slabId;
+			    $dumpUrl = $PHP_SELF.'&op=2&server='.(array_search($server,$GLOBALS['MEMCACHE_SERVERS'])).'&dumpslab='.$slabId;
 				echo
 					"<tr class=tr-$m>",
 					"<td class=td-0><center>",'<a href="',$dumpUrl,'">',$slabId,'</a>',"</center></td>",
@@ -337,12 +337,12 @@ EOB;
 					   <b>Free Chunks (free capacity): </b> ',(($slabInfo[$server][$slabId]['total_chunks'] - $slabInfo[$server][$slabId]['used_chunks'])).'<br/>
 					   <b>Evicted: </b> '.((int)$slab['evicted']).'<br/>
 					   <b>Age: </b> ',duration($time-$slab['age']),'<br/>';
-					if ((isset($_GET['dumpslab']) && $_GET['dumpslab']==$slabId) &&  (isset($_GET['server']) && $_GET['server']==array_search($server,$MEMCACHE_SERVERS))){
+					if ((isset($_GET['dumpslab']) && $_GET['dumpslab']==$slabId) &&  (isset($_GET['server']) && $_GET['server']==array_search($server,$GLOBALS['MEMCACHE_SERVERS']))){
 					    echo "<br/><b>Items: item</b><br/>";
 					    $items = dumpCacheSlab($server,$slabId,$slab['number']);
                         ksort($items['ITEM']);
                         foreach($items['ITEM'] as $itemKey=>$itemInfo){
-                            echo '<a href="',$PHP_SELF,'&op=4&server=',(array_search($server,$MEMCACHE_SERVERS)),'&key=',base64_encode($itemKey).'">'.$itemKey.'</a><br> ';
+                            echo '<a href="',$PHP_SELF,'&op=4&server=',(array_search($server,$GLOBALS['MEMCACHE_SERVERS'])),'&key=',base64_encode($itemKey).'">'.$itemKey.'</a><br> ';
                         }
 					}
 
@@ -368,7 +368,7 @@ EOB;
         // somebody has to do a fix to this.
         $theKey = htmlentities(base64_decode($_GET['key']));
 
-        $theserver = $MEMCACHE_SERVERS[(int)$_GET['server']];
+        $theserver = $GLOBALS['MEMCACHE_SERVERS'][(int)$_GET['server']];
         list($h,$p) = explode(':',$theserver);
         $r = sendMemcacheCommand($h,$p,'get '.$theKey);
         echo <<<EOB
@@ -391,19 +391,19 @@ EOB;
 			break;
         }
         $theKey = htmlentities(base64_decode($_GET['key']));
-		$theserver = $MEMCACHE_SERVERS[(int)$_GET['server']];
+		$theserver = $GLOBALS['MEMCACHE_SERVERS'][(int)$_GET['server']];
 		list($h,$p) = explode(':',$theserver);
         $r = sendMemcacheCommand($h,$p,'delete '.$theKey);
         echo 'Deleting '.$theKey.' : '.$r;
 	break;
     
    case 6: // flush server
-        $theserver = $MEMCACHE_SERVERS[(int)$_GET['server']];
+        $theserver = $GLOBALS['MEMCACHE_SERVERS'][(int)$_GET['server']];
         $r = flushServer($theserver);
         echo 'Flush  '.$theserver." : ".$r;
    break;
    case 7: // flush stats
-        $theserver = $MEMCACHE_SERVERS[(int)$_GET['server']];
+        $theserver = $GLOBALS['MEMCACHE_SERVERS'][(int)$_GET['server']];
         $r = flushStats($theserver);
         echo 'Stats reset '.$theserver." : ".print_r( $r,true);
    break;
@@ -458,7 +458,7 @@ EOB;
                 $usedBytes   = $slabInfo[$server][$slabId]['used_chunks'] * $chunkSize;
                 $unusedBytes = $totalBytes - $usedBytes;
 
-			    $dumpUrl = $PHP_SELF.'&op=2&server='.(array_search($server,$MEMCACHE_SERVERS)).'&dumpslab='.$slabId;
+			    $dumpUrl = $PHP_SELF.'&op=2&server='.(array_search($server,$GLOBALS['MEMCACHE_SERVERS'])).'&dumpslab='.$slabId;
 				echo "
 					<tr class=tr-$m>
 					<td class=td-0>".$slabId."</td>
