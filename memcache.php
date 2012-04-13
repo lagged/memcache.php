@@ -20,7 +20,11 @@
 
 $VERSION='$Id: modified memcache.php,v 1.1.2.3 2008/08/28 18:07:54 mikl Exp $';
 
-require_once __DIR__ . '/etc/config.php';
+if (true === file_exists(__DIR__ . '/etc/config.local.php')) {
+    require_once __DIR__ . '/etc/config.local.php';
+} else {
+    require_once __DIR__ . '/etc/config.php';
+}
 
 ////////// END OF DEFAULT CONFIG AREA /////////////////////////////////////////////////////////////
 
