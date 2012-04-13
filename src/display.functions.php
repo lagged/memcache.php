@@ -48,18 +48,23 @@ function menu_entry($ob,$title) {
 }
 
 function getHeader(){
+
+    $jq_core  = JQ_CORE;
+    $jq_ts    = JQ_TABLESORT;
+    $base_url = BASE_URL;
+
     $header = <<<EOT
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us">
 <head><title>MEMCACHE INFO</title>
 
-<link rel="stylesheet" href="{BASE_URL}css/memcache.css" type="text/css" />
-<link rel="stylesheet" href="{BASE_URL}js/style.css" type="text/css" />
-<link rel="stylesheet" href="{BASE_URL}js/vtip/css/vtip.css" type="text/css" />
+<link rel="stylesheet" href="{$base_url}css/memcache.css" type="text/css" />
+<link rel="stylesheet" href="{$base_url}js/style.css" type="text/css" />
+<link rel="stylesheet" href="{$base_url}js/vtip/css/vtip.css" type="text/css" />
 
-<script type="text/javascript" src="{JQ_CORE}"></script>
-<script type="text/javascript" src="{JQ_TABLESORT}"></script>
-<script type="text/javascript" src="{BASE_URL}js/vtip/vtip-min.js"></script>
+<script type="text/javascript" src="{$jq_core}"></script>
+<script type="text/javascript" src="{$jq_ts}"></script>
+<script type="text/javascript" src="{$base_url}js/vtip/vtip-min.js"></script>
 
 <script type="text/javascript">
     function must_confirm(txt, link){
