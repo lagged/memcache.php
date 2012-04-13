@@ -53,13 +53,13 @@ function getHeader(){
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us">
 <head><title>MEMCACHE INFO</title>
 
-<link rel="stylesheet" href="' . BASE_URL . 'css/memcache.css" type="text/css" />
-<link rel="stylesheet" href="' . BASE_URL . 'js/style.css" type="text/css" />
-<link rel="stylesheet" href="' . BASE_URL . 'js/vtip/css/vtip.css" type="text/css" />
+<link rel="stylesheet" href="{BASE_URL}css/memcache.css" type="text/css" />
+<link rel="stylesheet" href="{BASE_URL}js/style.css" type="text/css" />
+<link rel="stylesheet" href="{BASE_URL}js/vtip/css/vtip.css" type="text/css" />
 
-<script type="text/javascript" src="' . JQ_CORE . '"></script>
-<script type="text/javascript" src="' . JQ_TABLESORT . '"></script>
-<script type="text/javascript" src="' . BASE_URL; . 'js/vtip/vtip-min.js"></script>
+<script type="text/javascript" src="{JQ_CORE}"></script>
+<script type="text/javascript" src="{JQ_TABLESORT}"></script>
+<script type="text/javascript" src="{BASE_URL}js/vtip/vtip-min.js"></script>
 
 <script type="text/javascript">
     function must_confirm(txt, link){
