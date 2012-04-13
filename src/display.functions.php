@@ -42,9 +42,9 @@ function bsize($s) {
 function menu_entry($ob,$title) {
 	$PHP_SELF = getUrl();
 	if ($ob==$_GET['op']){
-	    return "<li><a class=\"child_active\" href=\"$PHP_SELF&op=$ob\">$title</a></li>";
+	    return "<li class=\"active\"><a href=\"{$PHP_SELF}&op={$ob}\">{$title}</a></li>";
 	}
-	return "<li><a class=\"active\" href=\"$PHP_SELF&op=$ob\">$title</a></li>";
+	return "<li><a href=\"{$PHP_SELF}&op={$ob}\">{$title}</a></li>";
 }
 
 function getHeader(){
@@ -110,7 +110,7 @@ function getFooter(){
 }
 function getMenu(){
     $PHP_SELF = getUrl();
-echo "<ol class=menu>";
+echo '<ul class="nav nav-tabs">';
 if ($_GET['op']!=4){
 echo <<<EOB
     <li><a href="$PHP_SELF&op={$_GET['op']}">Refresh Data</a></li>
@@ -127,7 +127,6 @@ echo
 	menu_entry(8,'Slabs');
 
 echo <<<EOB
-	</ol>
-	<br/>
+	</ul>
 EOB;
 }
