@@ -41,10 +41,9 @@ function getUrl() {
 }
 
 function sendMemcacheCommands($command){
-    global $MEMCACHE_SERVERS;
 	$result = array();
 
-	foreach($MEMCACHE_SERVERS as $server){
+	foreach($GLOBALS['MEMCACHE_SERVERS'] as $server){
 		list($host, $port) = explode(':', $server);
 		$result[$server]   = sendMemcacheCommand($host,$port,$command);
 	}
@@ -132,19 +131,9 @@ function flushStats($server){
     $resp = sendMemcacheCommand($host,$port,'stats reset');
     return $resp;
 }
+
 function getMemcacheVersion(){
-    GLOBAL $MEMCACHE_SERVERS;
-
-    $entries[] = array();
-    foreach ($MEMCACHE_SERVERS as $server) {
-        list($host, $port) = explode(':', $server);
-
-        $memcache = new Memcache;
-        $memcache->connect($host, $port);
-
-        $entries[$server] = $memcache->getVersion();
-        $memcache->close();
-    }
+    $entries = sendMemcacheCommands('version');
     return $entries;
 }
 
