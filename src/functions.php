@@ -133,7 +133,18 @@ function flushStats($server){
     return $resp;
 }
 function getMemcacheVersion(){
-    $entries = sendMemcacheCommands('version');
+    GLOBAL $MEMCACHE_SERVERS;
+
+    $entries[] = array();
+    foreach ($MEMCACHE_SERVERS as $server) {
+        list($host, $port) = explode(':', $server);
+
+        $memcache = new Memcache;
+        $memcache->connect($host, $port);
+
+        $entries[$server] = $memcache->getVersion();
+        $memcache->close();
+    }
     return $entries;
 }
 
