@@ -149,6 +149,8 @@ function getMemcacheVersion(){
 }
 
 function flushServer($server){
+    return;
+
     list($host,$port) = explode(':',$server);
     $resp = sendMemcacheCommand($host,$port,'flush_all');
     return $resp;
