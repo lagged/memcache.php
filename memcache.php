@@ -88,12 +88,8 @@ $PHP_SELF = getUrl();
 
 $_GET['op'] = !isset($_GET['op'])? '1':$_GET['op'];
 $time = time();
-// sanitize _GET
 
-foreach($_GET as $key=>$g){
-    $_GET[$key]=htmlentities($g);
-}
-
+$_GET = filter_input_array(INPUT_GET);
 
 // singleout
 // when singleout is set, it only gives details for that server.
