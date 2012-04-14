@@ -38,7 +38,11 @@ function bsize($s) {
 	return sprintf("%5.1f %sBytes",$s,$k);
 }
 
-// create menu entry
+/**
+ * create menu entry
+ *
+ * @return string
+ */
 function menu_entry($ob,$title) {
 	$PHP_SELF = getUrl();
 	if ($ob==$_GET['op']){
@@ -47,18 +51,24 @@ function menu_entry($ob,$title) {
 	return "<li><a href=\"{$PHP_SELF}&op={$ob}\">{$title}</a></li>";
 }
 
-function getHeader(){
+/**
+ * Print the header when we run stand-alone.
+ *
+ * @return void
+ */
+function getHeader()
+{
 
     $jq_core  = JQ_CORE;
     $jq_ts    = JQ_TABLESORT;
     $base_url = BASE_URL;
+    $PHP_SELF = getUrl();
 
     $header = <<<EOT
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us">
 <head><title>MEMCACHE INFO</title>
 
-<link rel="stylesheet" href="{$base_url}css/memcache.css" type="text/css" />
 <link rel="stylesheet" href="{$base_url}js/style.css" type="text/css" />
 <link rel="stylesheet" href="{$base_url}js/vtip/css/vtip.css" type="text/css" />
 
@@ -85,23 +95,26 @@ function getHeader(){
 
 </head>
 <body>
-<div class="head">
-	<h1 class="memcache">Memcache stats v0.1</h1>
-    <div class="memcache">
-    <a href="http://github.com/lagged/memcache.php">memcache.php on github</a> &nbsp;
-    <a href="http://artur.ejsmont.org">Visit website</a> &nbsp;
-    <a href="http://livebookmark.net/journal/2008/05/21/memcachephp-stats-like-apcphp/">Visit oryginal memcache.php website.</a>
+<div class="container">
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="{$PHP_SELF}">Memcache stats v0.X</a>
+                <ul class="nav pull-right">
+                    <li><a href="http://github.com/lagged/memcache.php">Github</a></li>
+                    <li><a href="http://artur.ejsmont.org">Arthur Ejsmont</a></li>
+                    <li><a href="http://livebookmark.net/journal/2008/05/21/memcachephp-stats-like-apcphp/">Original memcache.php website</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
-	<hr class="memcache">
-</div>
-<div class=content>
 EOT;
 
     return $header;
 }
 function getFooter(){
-    global $VERSION;
-    $footer = '</div><!-- Based on apc.php '.$VERSION.'--></body>
+    $footer = '</div>
+    </body>
 </html>
 ';
 
@@ -110,23 +123,21 @@ function getFooter(){
 }
 function getMenu(){
     $PHP_SELF = getUrl();
-echo '<ul class="nav nav-tabs">';
-if ($_GET['op']!=4){
-echo <<<EOB
-    <li><a href="$PHP_SELF&op={$_GET['op']}">Refresh Data</a></li>
+    echo '<ul class="nav nav-tabs">';
+    if ($_GET['op'] !=4 ){
+        echo <<<EOB
+<li><a href="$PHP_SELF&op={$_GET['op']}"><span class="label label-success">Refresh Stats</span></a></li>
 EOB;
-}
-else {
-echo <<<EOB
+    } else {
+        echo <<<EOB
     <li><a href="$PHP_SELF&op=2}">Back</a></li>
 EOB;
-}
-echo
-	menu_entry(1,'View Host Stats'),
-	menu_entry(2,'Variables'),
-	menu_entry(8,'Slabs');
+    }
+    echo menu_entry(1,'View Host Stats'),
+	    menu_entry(2,'Variables'),
+	    menu_entry(8,'Slabs');
 
-echo <<<EOB
+    echo <<<EOB
 	</ul>
 EOB;
 }
