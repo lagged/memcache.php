@@ -198,11 +198,11 @@ switch ($_GET['op']) {
 	    $set_rate = sprintf("%.2f",($sets)/($time-$startTime));
 
 	    echo <<< EOB
-		<div class="info div1"><h2>General Cache Information</h2>
+		<h2>General Cache Information</h2>
 		<table cellspacing=0><tbody>
-		<tr class=tr-1><td class=td-0>PHP Version</td><td>$phpversion</td></tr>
+		<tr><td>PHP Version</td><td>$phpversion</td></tr>
 EOB;
-		echo "<tr class=tr-0><td class=td-0>Memcached Host". ((count($MEMCACHE_SERVERS)>1) ? 's':'')."</td><td>";
+		echo "<tr class=tr-0><td>Memcached Host". ((count($MEMCACHE_SERVERS)>1) ? 's':'')."</td><td>";
 
 		$i=0;
 		if (!isset($_GET['singleout']) && count($MEMCACHE_SERVERS)>1){
@@ -217,7 +217,7 @@ EOB;
 		      echo '<a href="'.$PHP_SELF.'">(all servers)</a><br/>';
 		}
 		echo "</td></tr>\n";
-		echo "<tr class=tr-1><td class=td-0>Max Memcache Size</td><td>".bsize($memcacheStats['limit_maxbytes'])."</td></tr>\n";
+		echo "<tr><td>Max Memcache Size</td><td>".bsize($memcacheStats['limit_maxbytes'])."</td></tr>\n";
 
 	echo <<<EOB
 		</tbody></table>
@@ -227,28 +227,28 @@ EOB;
 EOB;
         foreach($MEMCACHE_SERVERS as $server){
             echo '<table cellspacing=0><tbody>';
-            echo '<tr class=tr-0><td class=td-0>'.$server.'</td><td>
+            echo '<tr class=tr-0><td>'.$server.'</td><td>
                   <button onclick="javascript:must_confirm(\'Delete all content on the server?!\',\''.$PHP_SELF.'&server='.array_search($server,$MEMCACHE_SERVERS).'&op=6\');">[<b>Flush server</b>]</button>
                   </td></tr>';
-            echo "<tr class=tr-1><td class=td-0>Memcache Version</td><td>".($memcacheVersion[$server])."</td></tr>";
+            echo "<tr><td>Memcache Version</td><td>".($memcacheVersion[$server])."</td></tr>";
             
-    		echo '<tr class=tr-0><td class=td-0>Start Time</td><td>',date(DATE_FORMAT,$memcacheStatsSingle[$server]['STAT']['time']-$memcacheStatsSingle[$server]['STAT']['uptime']),'</td></tr>';
-    		echo '<tr class=tr-1><td class=td-0>Uptime</td><td>',duration($memcacheStatsSingle[$server]['STAT']['time']-$memcacheStatsSingle[$server]['STAT']['uptime']),'</td></tr>';
-    		echo '<tr class=tr-0><td class=td-0>Memcached Server Version</td><td>'.$memcacheStatsSingle[$server]['STAT']['version'].'</td></tr>';
-    		echo '<tr class=tr-1><td class=td-0>Used Cache Size</td><td>',bsize($memcacheStatsSingle[$server]['STAT']['bytes']),'</td></tr>';
-    		echo '<tr class=tr-0><td class=td-0>Max Cache Size</td><td>',bsize($memcacheStatsSingle[$server]['STAT']['limit_maxbytes']),'</td></tr>';
+    		echo '<tr class=tr-0><td>Start Time</td><td>',date(DATE_FORMAT,$memcacheStatsSingle[$server]['STAT']['time']-$memcacheStatsSingle[$server]['STAT']['uptime']),'</td></tr>';
+    		echo '<tr><td>Uptime</td><td>',duration($memcacheStatsSingle[$server]['STAT']['time']-$memcacheStatsSingle[$server]['STAT']['uptime']),'</td></tr>';
+    		echo '<tr class=tr-0><td>Memcached Server Version</td><td>'.$memcacheStatsSingle[$server]['STAT']['version'].'</td></tr>';
+    		echo '<tr><td>Used Cache Size</td><td>',bsize($memcacheStatsSingle[$server]['STAT']['bytes']),'</td></tr>';
+    		echo '<tr class=tr-0><td>Max Cache Size</td><td>',bsize($memcacheStatsSingle[$server]['STAT']['limit_maxbytes']),'</td></tr>';
     		
-    		echo '<tr class=tr-1><td class=td-0>Current Connections Count</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['curr_connections']),'</td></tr>';
-    		echo '<tr class=tr-0><td class=td-0>Total Connections So Far</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['total_connections']),'</td></tr>';
-    		echo '<tr class=tr-1><td class=td-0>Flush CMD count</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['cmd_flush']),'</td></tr>';
-    		echo '<tr class=tr-0><td class=td-0>Get CMD count</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['cmd_get']),'</td></tr>';
-    		echo '<tr class=tr-1><td class=td-0>Set CMD cunt</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['cmd_set']),'</td></tr>';
-    		echo '<tr class=tr-0><td class=td-0>Items Evicted So Far</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['evictions']),'</td></tr>';
-    		echo '<tr class=tr-1><td class=td-0>Bytes Read So Far</td><td>',bsize($memcacheStatsSingle[$server]['STAT']['bytes_read']),'</td></tr>';
-    		echo '<tr class=tr-0><td class=td-0>Bytes Written So Far</td><td>',bsize($memcacheStatsSingle[$server]['STAT']['bytes_written']),'</td></tr>';
-    		echo '<tr class=tr-1><td class=td-0>Threads</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['threads']),'</td></tr>';
+    		echo '<tr><td>Current Connections Count</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['curr_connections']),'</td></tr>';
+    		echo '<tr class=tr-0><td>Total Connections So Far</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['total_connections']),'</td></tr>';
+    		echo '<tr><td>Flush CMD count</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['cmd_flush']),'</td></tr>';
+    		echo '<tr class=tr-0><td>Get CMD count</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['cmd_get']),'</td></tr>';
+    		echo '<tr><td>Set CMD cunt</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['cmd_set']),'</td></tr>';
+    		echo '<tr class=tr-0><td>Items Evicted So Far</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['evictions']),'</td></tr>';
+    		echo '<tr><td>Bytes Read So Far</td><td>',bsize($memcacheStatsSingle[$server]['STAT']['bytes_read']),'</td></tr>';
+    		echo '<tr class=tr-0><td>Bytes Written So Far</td><td>',bsize($memcacheStatsSingle[$server]['STAT']['bytes_written']),'</td></tr>';
+    		echo '<tr><td>Threads</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['threads']),'</td></tr>';
     		
-            echo '<tr class=tr-0><td class=td-0>'.$server.'</td><td>
+            echo '<tr class=tr-0><td>'.$server.'</td><td>
                   <button onclick="javascript:must_confirm(\'Clear stats on the server?!\',\''.$PHP_SELF.'&server='.array_search($server,$MEMCACHE_SERVERS).'&op=7\');">[<b>Reset stats</b>]</button>
                   </td></tr>';
             
@@ -264,7 +264,7 @@ EOB;
 	$size='width='.(GRAPH_SIZE+50).' height='.(GRAPH_SIZE+10);
 	echo <<<EOB
 		<tr>
-		<td class=td-0>Cache Usage</td>
+		<td>Cache Usage</td>
 		<td class=td-1>Hits &amp; Misses</td>
 		</tr>
 EOB;
@@ -272,15 +272,15 @@ EOB;
 	echo
 		graphics_avail() ?
 			  '<tr>'.
-			  "<td class=td-0><img alt=\"\" $size src=\"$PHP_SELF&IMG=1&".(isset($_GET['singleout'])? 'singleout='.$_GET['singleout'].'&':'')."$time\"></td>".
+			  "<td><img alt=\"\" $size src=\"$PHP_SELF&IMG=1&".(isset($_GET['singleout'])? 'singleout='.$_GET['singleout'].'&':'')."$time\"></td>".
 			  "<td class=td-1><img alt=\"\" $size src=\"$PHP_SELF&IMG=2&".(isset($_GET['singleout'])? 'singleout='.$_GET['singleout'].'&':'')."$time\"></td></tr>\n"
 			: "",
 		'<tr>',
-		'<td class=td-0><span class="green box">&nbsp;</span>Free: ',bsize($mem_avail).sprintf(" (%.1f%%)",$mem_avail*100/$mem_size),"</td>\n",
+		'<td><span class="green box">&nbsp;</span>Free: ',bsize($mem_avail).sprintf(" (%.1f%%)",$mem_avail*100/$mem_size),"</td>\n",
 		'<td class=td-1><span class="green box">&nbsp;</span>Hits: ',$hits.sprintf(" (%.1f%%)",$hits*100/($hits+$misses)),"</td>\n",
 		'</tr>',
 		'<tr>',
-		'<td class=td-0><span class="red box">&nbsp;</span>Used: ',bsize($mem_used ).sprintf(" (%.1f%%)",$mem_used *100/$mem_size),"</td>\n",
+		'<td><span class="red box">&nbsp;</span>Used: ',bsize($mem_used ).sprintf(" (%.1f%%)",$mem_used *100/$mem_size),"</td>\n",
 		'<td class=td-1><span class="red box">&nbsp;</span>Misses: ',$misses.sprintf(" (%.1f%%)",$misses*100/($hits+$misses)),"</td>\n";
 		echo <<< EOB
 	</tr>
@@ -288,13 +288,13 @@ EOB;
 <br/>
 	<div class="info"><h2>Cache Information</h2>
 		<table cellspacing=0><tbody>
-		<tr class=tr-0><td class=td-0>Current Items(total)</td><td>$curr_items ($total_items)</td></tr>
-		<tr class=tr-1><td class=td-0>Hits</td><td class=td-1>{$hits}</td></tr>
-		<tr class=tr-0><td class=td-0>Misses</td><td>{$misses}</td></tr>
-		<tr class=tr-1><td class=td-0>Request Rate (hits, misses)</td><td>$req_rate cache requests/second</td></tr>
-		<tr class=tr-0><td class=td-0>Hit Rate</td><td>$hit_rate cache requests/second</td></tr>
-		<tr class=tr-1><td class=td-0>Miss Rate</td><td>$miss_rate cache requests/second</td></tr>
-		<tr class=tr-0><td class=td-0>Set Rate</td><td>$set_rate cache requests/second</td></tr>
+		<tr class=tr-0><td>Current Items(total)</td><td>$curr_items ($total_items)</td></tr>
+		<tr><td>Hits</td><td class=td-1>{$hits}</td></tr>
+		<tr class=tr-0><td>Misses</td><td>{$misses}</td></tr>
+		<tr><td>Request Rate (hits, misses)</td><td>$req_rate cache requests/second</td></tr>
+		<tr class=tr-0><td>Hit Rate</td><td>$hit_rate cache requests/second</td></tr>
+		<tr><td>Miss Rate</td><td>$miss_rate cache requests/second</td></tr>
+		<tr class=tr-0><td>Set Rate</td><td>$set_rate cache requests/second</td></tr>
 		</tbody></table>
 		</div>
 
@@ -324,7 +324,7 @@ EOB;
 			    $dumpUrl = $PHP_SELF.'&op=2&server='.(array_search($server,$MEMCACHE_SERVERS)).'&dumpslab='.$slabId;
 				echo
 					"<tr class=tr-$m>",
-					"<td class=td-0><center>",'<a href="',$dumpUrl,'">',$slabId,'</a>',"</center></td>",
+					"<td><center>",'<a href="',$dumpUrl,'">',$slabId,'</a>',"</center></td>",
 					"<td class=td-last>
 					   <b>Item count: </b> ",$slab['number'],'<br/>
 					   <b>Chunk Size (max item size): </b> ',(bsize($slabInfo[$server][$slabId]['chunk_size'])).'<br/>
@@ -373,7 +373,7 @@ EOB;
         <div class="info"><table cellspacing=0><tbody>
 			<tr><th>Server<th>Key</th><th>Value</th><th>Delete</th></tr>
 EOB;
-        echo "<tr><td class=td-0>",$theserver,"</td><td class=td-0>",$theKey,
+        echo "<tr><td>",$theserver,"</td><td>",$theKey,
              " <br/>flag:",$r['VALUE'][$theKey]['stat']['flag'],
              " <br/>Size:",bsize($r['VALUE'][$theKey]['stat']['size']),
              "</td><td>",chunk_split($r['VALUE'][$theKey]['value'],40),"</td>",
@@ -459,7 +459,7 @@ EOB;
 			    $dumpUrl = $PHP_SELF.'&op=2&server='.(array_search($server,$MEMCACHE_SERVERS)).'&dumpslab='.$slabId;
 				echo "
 					<tr class=tr-$m>
-					<td class=td-0>".$slabId."</td>
+					<td>".$slabId."</td>
 					<td>".$itemsCount."</td>
 					<td>".$chunkSize."</td>
 					<td>".(($slabInfo[$server][$slabId]['chunks_per_page']))."</td>
@@ -472,7 +472,7 @@ EOB;
 					<td>".(int)$slab['evicted']."</td>
 					<td>".(int)$slab['evicted_time']."</td>
                     <td>".duration($time-$slab['age'])."</td>
-					<td class=td-0><center><a href=\"".$dumpUrl."\">details</a></center></td>
+					<td><center><a href=\"".$dumpUrl."\">details</a></center></td>
 
                     </tr>";
 				$m=1-$m;
