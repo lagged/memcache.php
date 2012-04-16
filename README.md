@@ -2,6 +2,12 @@
 
 An APC-like stats/info page for your memcached servers.
 
+**THIS IS A WORK IN PROGRESS**
+
+## Requirements
+
+ * Twitter Bootstrap 2.0.2
+
 ## Setup
 
  * git clone this
