@@ -196,7 +196,7 @@ switch ($_GET['op']) {
 
 	    echo <<< EOB
 <div class="row">
-    <div class="span12">
+    <div class="span8">
 		<h2>General Cache Information</h2>
 		<table class="table table-striped"><tbody>
 		<tr><th scope="row">PHP Version</td><td>{$phpversion}</td></tr>
@@ -223,7 +223,7 @@ EOB;
     </div>
 </div>
 <div class="row">
-    <div class="span12">
+    <div class="span8">
 		<h2>Memcache Server Information</h2>
 EOB;
         foreach($GLOBALS['MEMCACHE_SERVERS'] as $server){
@@ -260,7 +260,7 @@ EOB;
 </div>
 
 <div class="row">
-    <div class="span6">
+    <div class="span8">
 
 		<h2>Host Status Diagrams</h2>
 		<table class="table table-striped"><thead>
@@ -293,7 +293,9 @@ EOB;
 	</tr>
 	</tbody></table>
     </div>
-    <div class="span6">
+</div>
+<div class="row">
+    <div class="span8">
 	<h2>Cache Information</h2>
 		<table class="table table-striped"><tbody>
 		<tr><th scope="row">Current Items(total)</th><td>$curr_items ($total_items)</td></tr>
