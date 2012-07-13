@@ -21,8 +21,16 @@
 
 $VERSION='$Id: modified memcache.php,v 1.1.2.3 2008/08/28 18:07:54 mikl Exp $';
 
-if (true === file_exists(__DIR__ . '/etc/config.local.php')) {
-    require_once __DIR__ . '/etc/config.local.php';
+/**
+ * This allows us to override the path to the local configuration before including
+ * 'memcache.php'. Pretty cool, no?
+ */
+if (!isset($localConfig) || empty($localConfig)) {
+	$localConfig = __DIR__ . '/etc/config.local.php';
+}
+
+if (true === file_exists($localConfig)) {
+    require_once $localConfig;
 } else {
     require_once __DIR__ . '/etc/config.php';
 }
