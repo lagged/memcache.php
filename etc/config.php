@@ -18,3 +18,4 @@ define('RUN_WRAPPED', false);
 $GLOBALS['MEMCACHE_SERVERS']   = array();
 $GLOBALS['MEMCACHE_SERVERS'][] = 'localhost:11211'; // add more as an array
 //$GLOBALS['MEMCACHE_SERVERS'][] = 'mymemcache-server2:11211'; // add more as an array
+//$GLOBALS['MEMCACHE_SERVERS'][] = 'unix:///var/path/to/socket/memcached.sock'; // you can connect by socketfile also
