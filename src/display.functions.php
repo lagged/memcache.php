@@ -71,10 +71,12 @@ function getHeader()
 
 <link rel="stylesheet" href="{$base_url}js/style.css" type="text/css" />
 <link rel="stylesheet" href="{$base_url}js/vtip/css/vtip.css" type="text/css" />
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 
 <script type="text/javascript" src="{$jq_core}"></script>
 <script type="text/javascript" src="{$jq_ts}"></script>
 <script type="text/javascript" src="{$base_url}js/vtip/vtip-min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
     function must_confirm(txt, link){
@@ -100,10 +102,24 @@ function getHeader()
         <div class="navbar-inner">
             <div class="container">
                 <a class="brand" href="{$PHP_SELF}">Memcache stats v0.X</a>
-                <ul class="nav pull-right">
-                    <li><a href="http://github.com/lagged/memcache.php">Github</a></li>
-                    <li><a href="http://artur.ejsmont.org">Arthur Ejsmont</a></li>
-                    <li><a href="http://livebookmark.net/journal/2008/05/21/memcachephp-stats-like-apcphp/">Original memcache.php website</a></li>
+EOT;
+    $PHP_SELF = getUrl();
+    $header .= '<ul class="nav pull-right">';
+    if ($_GET['op'] !=4 ){
+        $header .= <<<EOB
+<li><a href="$PHP_SELF&op={$_GET['op']}"><span class="text-info"><span class="icon icon-repeat"> </span> Refresh Stats</span> </a></li>
+EOB;
+
+    } else {
+        $header .= <<<EOB
+    <li><a href="$PHP_SELF&op=2">Back</a></li>
+EOB;
+    }
+    $header .= menu_entry(1,'View Host Stats').
+	    menu_entry(2,'Variables').
+	    menu_entry(8,'Slabs');
+
+	    $header .= <<<EOT
                 </ul>
             </div>
         </div>
@@ -113,7 +129,13 @@ EOT;
     return $header;
 }
 function getFooter(){
-    $footer = '</div>
+    $footer = '
+                <ul class="nav nav-tabs">
+                    <li><a href="http://github.com/lagged/memcache.php">Github</a></li>
+                    <li><a href="http://artur.ejsmont.org">Arthur Ejsmont</a></li>
+                    <li><a href="http://livebookmark.net/journal/2008/05/21/memcachephp-stats-like-apcphp/">Original memcache.php website</a></li>
+                </ul>
+	</div>
     </body>
 </html>
 ';
@@ -122,22 +144,8 @@ function getFooter(){
 
 }
 function getMenu(){
-    $PHP_SELF = getUrl();
-    echo '<ul class="nav nav-tabs">';
-    if ($_GET['op'] !=4 ){
-        echo <<<EOB
-<li><a href="$PHP_SELF&op={$_GET['op']}"><span class="label label-success">Refresh Stats</span></a></li>
-EOB;
-    } else {
-        echo <<<EOB
-    <li><a href="$PHP_SELF&op=2}">Back</a></li>
-EOB;
-    }
-    echo menu_entry(1,'View Host Stats'),
-	    menu_entry(2,'Variables'),
-	    menu_entry(8,'Slabs');
 
     echo <<<EOB
-	</ul>
+
 EOB;
 }
