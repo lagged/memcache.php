@@ -37,6 +37,6 @@ table.tablesorter thead tr .headerSortDown {
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 background-color: #8dbdd8;
 }
-.nav {
-	margin-top:3em;
+body {
+	padding-top:3em;
 }
