@@ -11,6 +11,7 @@ An APC-like stats/info page for your memcached servers.
 ## Setup
 
  * git clone this
+   `wget http://getbootstrap.com/2.3.2/assets/bootstrap.zip && unzip bootstrap.zip`
  * make changes to `etc/config.local.php` (copy from `etc/config.php`)
  * Profit!
 
