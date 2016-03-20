@@ -71,10 +71,12 @@ function getHeader()
 
 <link rel="stylesheet" href="{$base_url}js/style.css" type="text/css" />
 <link rel="stylesheet" href="{$base_url}js/vtip/css/vtip.css" type="text/css" />
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 
 <script type="text/javascript" src="{$jq_core}"></script>
 <script type="text/javascript" src="{$jq_ts}"></script>
 <script type="text/javascript" src="{$base_url}js/vtip/vtip-min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
     function must_confirm(txt, link){
