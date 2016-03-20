@@ -233,26 +233,54 @@ EOB;
         '<tr>',
         '<td><span class="label label-important">Used</span> ',bsize($mem_used ).sprintf(" (%.1f%%)",$mem_used *100/$mem_size),"</td>\n",
         '<td><span class="label label-important">Misses</span> ',$misses.sprintf(" (%.1f%%)",$misses*100/($hits+$misses)),"</td>\n";
-        echo <<< EOB
-    </tr>
+        echo <<<EOB
+        <tr>
+            <td>Current Items $curr_items</td>
+            <td>Req. Rate (hits, misses) $req_rate rps</td>
+        </tr>
+        <tr>
+            <td>Total $total_items</td>
+            <td><span class="label label-success">Hit Rate</span> $hit_rate rps</td>
+        <tr>
+            <td>&nbsp;</td>
+            <td><span class="label label-important">Miss Rate</span> $miss_rate rps</td>
+	</tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td><span class="label label-info">Set Rate</span> $set_rate rps</td>
+        </tr>
     </tbody></table>
     </div>
 
     <div class="span6">
 	<h2>Cache Information</h2>
 		<table class="table table-striped"><tbody>
-		<tr><th scope="row">Current Items(total)</th><td>$curr_items ($total_items)</td></tr>
-		<tr><th scope="row">Hits</td><td>{$hits}</td></tr>
-		<tr><th scope="row">Misses</td><td>{$misses}</td></tr>
-		<tr><th scope="row">Request Rate (hits, misses)</td><td>$req_rate cache requests/second</td></tr>
-		<tr><th scope="row"><span class="label label-success">Hit Rate</span></td><td>$hit_rate cache requests/second</td></tr>
-		<tr><th scope="row"><span class="label label-important">Miss Rate</span></td><td>$miss_rate cache requests/second</td></tr>
-		<tr><th scope="row"><span class="label label-info">Set Rate</span></td><td>$set_rate cache requests/second</td></tr>
+EOB;
+    foreach($GLOBALS['MEMCACHE_SERVERS'] as $server){
+            echo '<tr><th width="60%">&nbsp;</th><th>'.$server.'</th></tr>';
+            echo '<tr><th scope="row">Current Connections Count</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['curr_connections']),'</td></tr>';
+            echo '<tr><th scope="row">Total Connections So Far</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['total_connections']),'</td></tr>';
+            echo '<tr><th scope="row">Flush CMD count</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['cmd_flush']),'</td></tr>';
+            echo '<tr><th scope="row">Get CMD count</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['cmd_get']),'</td></tr>';
+            echo '<tr><th scope="row">Set CMD count</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['cmd_set']),'</td></tr>';
+            echo '<tr><th scope="row"><span class="icon-trash"></span> Items Evicted So Far</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['evictions']),'</td></tr>';
+            echo '<tr><th scope="row"><span class="icon-arrow-left"></span> Bytes Read So Far</td><td>',bsize($memcacheStatsSingle[$server]['STAT']['bytes_read']),'</td></tr>';
+            echo '<tr><th scope="row"><span class="icon-arrow-right"></span> Bytes Written So Far</td><td>',bsize($memcacheStatsSingle[$server]['STAT']['bytes_written']),'</td></tr>';
+            echo '<tr><th scope="row">Uptime</td><td>',duration($memcacheStatsSingle[$server]['STAT']['time']-$memcacheStatsSingle[$server]['STAT']['uptime']),'</td></tr>';
+
+            echo '<tr><th scope="row"></td><td>
+                    <a onclick="javascript:must_confirm(\'Clear stats on the server?!\',\''.$PHP_SELF.'&server='.array_search($server,$GLOBALS['MEMCACHE_SERVERS']).'&op=7\');">
+                        <span class="btn btn-warning">Reset stats</span>
+                    </a>
+                  </td></tr>';
+    }
+    
+echo '
 		</tbody></table>
     </div>
 </div>
 
-EOB;
+';
 
 
 
@@ -292,29 +320,15 @@ EOB;
             echo '<table class="table table-striped"><tbody>';
             echo '<tr><th scope="row">'.$server.'</td><td>
                     <a onclick="javascript:must_confirm(\'Delete all content on the server?!\',\''.$PHP_SELF.'&server='.array_search($server,$GLOBALS['MEMCACHE_SERVERS']).'&op=6\');">
-                        <span class="label label-warning">Flush server</span>
+                        <span class="btn btn-danger">Flush server</span>
                     </a>
                   </td></tr>';
             echo '<tr><th scope="row">Memcache Version</td><td>' . ($memcacheVersion[$server]) . "</td></tr>";
             echo '<tr><th scope="row">Start Time</td><td>',date(DATE_FORMAT,$memcacheStatsSingle[$server]['STAT']['time']-$memcacheStatsSingle[$server]['STAT']['uptime']),'</td></tr>';
-            echo '<tr><th scope="row">Uptime</td><td>',duration($memcacheStatsSingle[$server]['STAT']['time']-$memcacheStatsSingle[$server]['STAT']['uptime']),'</td></tr>';
             echo '<tr><th scope="row">Memcached Server Version</td><td>'.$memcacheStatsSingle[$server]['STAT']['version'].'</td></tr>';
             echo '<tr><th scope="row">Used Cache Size</td><td>',bsize($memcacheStatsSingle[$server]['STAT']['bytes']),'</td></tr>';
             echo '<tr><th scope="row">Max Cache Size</td><td>',bsize($memcacheStatsSingle[$server]['STAT']['limit_maxbytes']),'</td></tr>';
-            echo '<tr><th scope="row">Current Connections Count</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['curr_connections']),'</td></tr>';
-            echo '<tr><th scope="row">Total Connections So Far</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['total_connections']),'</td></tr>';
-            echo '<tr><th scope="row">Flush CMD count</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['cmd_flush']),'</td></tr>';
-            echo '<tr><th scope="row">Get CMD count</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['cmd_get']),'</td></tr>';
-            echo '<tr><th scope="row">Set CMD count</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['cmd_set']),'</td></tr>';
-            echo '<tr><th scope="row">Items Evicted So Far</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['evictions']),'</td></tr>';
-            echo '<tr><th scope="row">Bytes Read So Far</td><td>',bsize($memcacheStatsSingle[$server]['STAT']['bytes_read']),'</td></tr>';
-            echo '<tr><th scope="row">Bytes Written So Far</td><td>',bsize($memcacheStatsSingle[$server]['STAT']['bytes_written']),'</td></tr>';
             echo '<tr><th scope="row">Threads</td><td>',(int)($memcacheStatsSingle[$server]['STAT']['threads']),'</td></tr>';
-            echo '<tr><th scope="row">'.$server.'</td><td>
-                    <a onclick="javascript:must_confirm(\'Clear stats on the server?!\',\''.$PHP_SELF.'&server='.array_search($server,$GLOBALS['MEMCACHE_SERVERS']).'&op=7\');">
-                        <span class="label label-warning">Reset stats</span>
-                    </a>
-                  </td></tr>';
             echo '</tbody></table>';
        }
     echo <<<EOB
