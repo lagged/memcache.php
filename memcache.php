@@ -202,9 +202,65 @@ switch ($_GET['op']) {
         $miss_rate = sprintf("%.2f",($misses)/($time-$startTime));
         $set_rate = sprintf("%.2f",($sets)/($time-$startTime));
 
+echo <<<EOB
+<div class="row">
+    <div class="span6">
+
+        <h2>Host Status Diagrams</h2>
+        <table class="table table-striped"><thead>
+EOB;
+
+    $size='width='.(GRAPH_SIZE+50).' height='.(GRAPH_SIZE+10);
+    echo <<<EOB
+        <tr>
+        <th>Cache Usage</th>
+        <th>Hits &amp; Misses</th>
+        </tr>
+        </thead>
+        <tbody>
+EOB;
+
+    echo
+        graphics_avail() ?
+              '<tr>'.
+              "<td><img alt=\"\" $size src=\"$PHP_SELF&IMG=1&".(isset($_GET['singleout'])? 'singleout='.$_GET['singleout'].'&':'')."$time\"></td>".
+              "<td><img alt=\"\" $size src=\"$PHP_SELF&IMG=2&".(isset($_GET['singleout'])? 'singleout='.$_GET['singleout'].'&':'')."$time\"></td></tr>\n"
+            : "",
+        '<tr>',
+        '<td><span class="label label-success">Free</span> ',bsize($mem_avail).sprintf(" (%.1f%%)",$mem_avail*100/$mem_size),"</td>\n",
+        '<td><span class="label label-success">Hits</span> ',$hits.sprintf(" (%.1f%%)",$hits*100/($hits+$misses)),"</td>\n",
+        '</tr>',
+        '<tr>',
+        '<td><span class="label label-important">Used</span> ',bsize($mem_used ).sprintf(" (%.1f%%)",$mem_used *100/$mem_size),"</td>\n",
+        '<td><span class="label label-important">Misses</span> ',$misses.sprintf(" (%.1f%%)",$misses*100/($hits+$misses)),"</td>\n";
+        echo <<< EOB
+    </tr>
+    </tbody></table>
+    </div>
+
+    <div class="span6">
+	<h2>Cache Information</h2>
+		<table class="table table-striped"><tbody>
+		<tr><th scope="row">Current Items(total)</th><td>$curr_items ($total_items)</td></tr>
+		<tr><th scope="row">Hits</td><td>{$hits}</td></tr>
+		<tr><th scope="row">Misses</td><td>{$misses}</td></tr>
+		<tr><th scope="row">Request Rate (hits, misses)</td><td>$req_rate cache requests/second</td></tr>
+		<tr><th scope="row"><span class="label label-success">Hit Rate</span></td><td>$hit_rate cache requests/second</td></tr>
+		<tr><th scope="row"><span class="label label-important">Miss Rate</span></td><td>$miss_rate cache requests/second</td></tr>
+		<tr><th scope="row"><span class="label label-info">Set Rate</span></td><td>$set_rate cache requests/second</td></tr>
+		</tbody></table>
+    </div>
+</div>
+
+EOB;
+
+
+
+
+
         echo <<< EOB
 <div class="row">
-    <div class="span8">
+    <div class="span6">
 		<h2>General Cache Information</h2>
 		<table class="table table-striped"><tbody>
 		<tr><th scope="row">PHP Version</td><td>{$phpversion}</td></tr>
@@ -229,9 +285,7 @@ EOB;
     echo <<<EOB
         </tbody></table>
     </div>
-</div>
-<div class="row">
-    <div class="span8">
+    <div class="span6">
 		<h2>Memcache Server Information</h2>
 EOB;
         foreach($GLOBALS['MEMCACHE_SERVERS'] as $server){
@@ -266,57 +320,6 @@ EOB;
     echo <<<EOB
     </div>
 </div>
-
-<div class="row">
-    <div class="span8">
-
-        <h2>Host Status Diagrams</h2>
-        <table class="table table-striped"><thead>
-EOB;
-
-    $size='width='.(GRAPH_SIZE+50).' height='.(GRAPH_SIZE+10);
-    echo <<<EOB
-        <tr>
-        <th>Cache Usage</th>
-        <th>Hits &amp; Misses</th>
-        </tr>
-        </thead>
-        <tbody>
-EOB;
-
-    echo
-        graphics_avail() ?
-              '<tr>'.
-              "<td><img alt=\"\" $size src=\"$PHP_SELF&IMG=1&".(isset($_GET['singleout'])? 'singleout='.$_GET['singleout'].'&':'')."$time\"></td>".
-              "<td><img alt=\"\" $size src=\"$PHP_SELF&IMG=2&".(isset($_GET['singleout'])? 'singleout='.$_GET['singleout'].'&':'')."$time\"></td></tr>\n"
-            : "",
-        '<tr>',
-        '<td><span class="label label-success">Free</span> ',bsize($mem_avail).sprintf(" (%.1f%%)",$mem_avail*100/$mem_size),"</td>\n",
-        '<td><span class="label label-success">Hits</span> ',$hits.sprintf(" (%.1f%%)",$hits*100/($hits+$misses)),"</td>\n",
-        '</tr>',
-        '<tr>',
-        '<td><span class="label label-important">Used</span> ',bsize($mem_used ).sprintf(" (%.1f%%)",$mem_used *100/$mem_size),"</td>\n",
-        '<td><span class="label label-important">Misses</span> ',$misses.sprintf(" (%.1f%%)",$misses*100/($hits+$misses)),"</td>\n";
-        echo <<< EOB
-    </tr>
-    </tbody></table>
-    </div>
-</div>
-<div class="row">
-    <div class="span8">
-	<h2>Cache Information</h2>
-		<table class="table table-striped"><tbody>
-		<tr><th scope="row">Current Items(total)</th><td>$curr_items ($total_items)</td></tr>
-		<tr><th scope="row">Hits</td><td>{$hits}</td></tr>
-		<tr><th scope="row">Misses</td><td>{$misses}</td></tr>
-		<tr><th scope="row">Request Rate (hits, misses)</td><td>$req_rate cache requests/second</td></tr>
-		<tr><th scope="row"><span class="label label-success">Hit Rate</span></td><td>$hit_rate cache requests/second</td></tr>
-		<tr><th scope="row"><span class="label label-important">Miss Rate</span></td><td>$miss_rate cache requests/second</td></tr>
-		<tr><th scope="row"><span class="label label-info">Set Rate</span></td><td>$set_rate cache requests/second</td></tr>
-		</tbody></table>
-    </div>
-</div>
-
 EOB;
 
     break;
