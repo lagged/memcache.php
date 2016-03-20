@@ -132,7 +132,7 @@ function getMenu(){
 EOB;
     } else {
         echo <<<EOB
-    <li><a href="$PHP_SELF&op=2}">Back</a></li>
+    <li><a href="$PHP_SELF&op=2">Back</a></li>
 EOB;
     }
     echo menu_entry(1,'View Host Stats'),
