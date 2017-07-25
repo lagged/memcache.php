@@ -180,6 +180,7 @@ echo getMenu();
 
 switch ($_GET['op']) {
 
+    default:
     case 1: // host stats
         $phpversion = phpversion();
         $memcacheStats = getMemcacheStats();
