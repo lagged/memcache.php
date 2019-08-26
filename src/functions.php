@@ -44,7 +44,12 @@ function sendMemcacheCommands($command){
 	$result = array();
 
 	foreach($GLOBALS['MEMCACHE_SERVERS'] as $server){
-		list($host, $port) = explode(':', $server);
+		if ( strstr($server, 'unix:') === false ){
+                        list($host, $port) = explode(':', $server);
+                } else {
+                        $host=$server;
+                        $port=-1;
+                }
 		$result[$server]   = sendMemcacheCommand($host,$port,$command);
 	}
 	return $result;
